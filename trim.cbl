@@ -1,24 +1,23 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. DB2NVL.
+       PROGRAM-ID. DB2TRIM.
 
        DATA DIVISION.
        WORKING-STORAGE SECTION.
 
            EXEC SQL INCLUDE SQLCA END-EXEC.
 
-       01  WS-EMPNO      PIC X(06) VALUE '000010'.
-       01  WS-PHONE      PIC X(20).
+       01  WS-NAME       PIC X(20).
 
        PROCEDURE DIVISION.
            EXEC SQL
-               SELECT NVL(PHONENO, 'N/A')
-                 INTO :WS-PHONE
+               SELECT TRIM(FIRSTNME)
+                 INTO :WS-NAME
                  FROM DSN8C10.EMP
-                WHERE EMPNO = :WS-EMPNO
+                WHERE EMPNO = '000010'
            END-EXEC.
 
            IF SQLCODE = 0
-               DISPLAY WS-EMPNO ' ' WS-PHONE
+               DISPLAY WS-NAME
            END-IF.
 
            STOP RUN.
